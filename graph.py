@@ -14,3 +14,6 @@ class Graph:
     def add_arc(self, source, target, distance):
         self.nodes[source].add(target)
         self.distance[source, target] = distance
+
+    def get_neighbors(self, node):
+        return self.nodes[node]
