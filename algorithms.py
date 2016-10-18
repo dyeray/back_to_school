@@ -40,27 +40,39 @@ def dijkstra(graph, source, target):
     return dist[target], get_min_path(prev, source, target)
 
 
-def dfs(graph, source, target, max_depth, condition):
-    dfs_ = _DFS(graph, max_depth, target, condition)
-    return dfs_.find_paths(source, 0)
+class BaseDFS:
 
-class _DFS:
-
-    def __init__(self, graph, max_depth, target, condition):
+    def __init__(self, graph, max_cost, target, condition):
         self.graph = graph
-        self.max_depth = max_depth
+        self.max_cost = max_cost
         self.target = target
         self.condition = condition
 
-    def find_paths(self, current_node, current_depth):
+    def _increment_cost(self, source, target, cost):
+        raise NotImplementedError
+
+    def find_paths(self, source, cost=0):
+        '''Returns all the paths from source to self.target that meet self.condition
+           Output format is a list of pairs (path,cost)'''
         solutions = []
-        if current_node == self.target and self.condition(current_depth, self.max_depth):
-            solutions.append([current_node])
-        if current_depth != self.max_depth:
-            for neighbor in self.graph.get_neighbors(current_node):
-                partial_solutions = self.find_paths(neighbor, current_depth + 1)
+        if source == self.target and self.condition(cost, self.max_cost):
+            solutions.append(([source], cost))
+        if cost < self.max_cost:
+            for neighbor in self.graph.get_neighbors(source):
+                new_cost = self._increment_cost(source, neighbor, cost)
+                partial_solutions = self.find_paths(neighbor, new_cost)
                 if len(partial_solutions):
                     for sol in partial_solutions:
-                        sol.insert(0, current_node)
+                        sol[0].insert(0, source)
                         solutions.append(sol)
         return solutions
+
+class DepthBoundDFS(BaseDFS):
+    '''DFS with cost function based on depth of the search'''
+    def _increment_cost(self, source, target, cost):
+        return cost + 1
+
+class DistanceBoundDFS(BaseDFS):
+    '''DFS with cost function based on the distance between the nodes of the path'''
+    def _increment_cost(self, source, target, cost):
+        return cost + self.graph.distance[source, target]

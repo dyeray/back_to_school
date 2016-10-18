@@ -1,7 +1,7 @@
 ﻿import json
 
 from graph import Graph
-from algorithms import get_direct_distance, dijkstra, dfs
+from algorithms import get_direct_distance, dijkstra, DepthBoundDFS, DistanceBoundDFS
 from exceptions import InvalidPathError
 
 def print_direct_path(graph, path):
@@ -29,16 +29,24 @@ if __name__ == "__main__":
     print_min_distance(graph, "Buenos Aires", "Liverpool")
     print_min_distance(graph, "New York", "New York")
 
-    condition = lambda x,y: x <= y
+    #def dfs(graph, source, target, max_cost, condition):
+    #dfs_ = TransitionDFS(graph, max_cost, target, condition)
+    #return dfs_.find_paths(source, 0)
+
     source = 'New York'
     target='New York'
-    max_depth = 4
-    solutions = dfs(graph, source, target, max_depth, condition)
-    print("Routes from {} to {} with a maximum of {} intermediate stops: {}. Total: {}".format(source, target, max_depth - 1, solutions, len(solutions)))
+    max_cost = 4
+    solutions = DepthBoundDFS(graph, max_cost, target, condition=lambda cost,max_cost: cost <= max_cost).find_paths(source)
+    print("Routes from {} to {} with a maximum of {} intermediate stops: {}. Total: {}".format(source, target, max_cost - 1, solutions, len(solutions)))
 
-    condition = lambda x,y: x == y
     source = 'Buenos Aires'
     target='Liverpool'
-    max_depth = 5
-    solutions = dfs(graph, source, target, max_depth, condition)
-    print("Routes from {} to {} with exactly {} intermediate stops: {}. Total: {}".format(source, target, max_depth - 1, solutions, len(solutions)))
+    max_cost = 5
+    solutions = DepthBoundDFS(graph, max_cost, target, condition=lambda cost,max_cost: cost == max_cost).find_paths(source)
+    print("Routes from {} to {} with exactly {} intermediate stops: {}. Total: {}".format(source, target, max_cost - 1, solutions, len(solutions)))
+
+    source = 'Liverpool'
+    target = 'Liverpool'
+    max_cost = 25
+    solutions = DistanceBoundDFS(graph, max_cost, target, condition=lambda cost,max_cost: cost <= max_cost).find_paths(source)
+    print("Routes from {} to {} with a maximum of {} days of duration: {}. Total: {}".format(source, target, max_cost, solutions, len(solutions)))
