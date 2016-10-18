@@ -1,7 +1,7 @@
 ﻿import json
 
 from graph import Graph
-from algorithms import get_direct_distance, dijkstra
+from algorithms import get_direct_distance, dijkstra, dfs
 from exceptions import InvalidPathError
 
 def print_direct_path(graph, path):
@@ -28,3 +28,17 @@ if __name__ == "__main__":
 
     print_min_distance(graph, "Buenos Aires", "Liverpool")
     print_min_distance(graph, "New York", "New York")
+
+    condition = lambda x,y: x <= y
+    source = 'New York'
+    target='New York'
+    max_depth = 4
+    solutions = dfs(graph, source, target, max_depth, condition)
+    print("Routes from {} to {} with a maximum of {} intermediate stops: {}. Total: {}".format(source, target, max_depth - 1, solutions, len(solutions)))
+
+    condition = lambda x,y: x == y
+    source = 'Buenos Aires'
+    target='Liverpool'
+    max_depth = 5
+    solutions = dfs(graph, source, target, max_depth, condition)
+    print("Routes from {} to {} with exactly {} intermediate stops: {}. Total: {}".format(source, target, max_depth - 1, solutions, len(solutions)))

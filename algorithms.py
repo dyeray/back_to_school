@@ -38,3 +38,29 @@ def dijkstra(graph, source, target):
                 dist[v] = alt
                 prev[v] = u
     return dist[target], get_min_path(prev, source, target)
+
+
+def dfs(graph, source, target, max_depth, condition):
+    dfs_ = _DFS(graph, max_depth, target, condition)
+    return dfs_.find_paths(source, 0)
+
+class _DFS:
+
+    def __init__(self, graph, max_depth, target, condition):
+        self.graph = graph
+        self.max_depth = max_depth
+        self.target = target
+        self.condition = condition
+
+    def find_paths(self, current_node, current_depth):
+        solutions = []
+        if current_node == self.target and self.condition(current_depth, self.max_depth):
+            solutions.append([current_node])
+        if current_depth != self.max_depth:
+            for neighbor in self.graph.get_neighbors(current_node):
+                partial_solutions = self.find_paths(neighbor, current_depth + 1)
+                if len(partial_solutions):
+                    for sol in partial_solutions:
+                        sol.insert(0, current_node)
+                        solutions.append(sol)
+        return solutions
