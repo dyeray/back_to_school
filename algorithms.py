@@ -3,6 +3,7 @@
 from exceptions import InvalidPathError
 
 def get_direct_distance(graph, route):
+    '''Returns the total distance of travelling through a path in the graph'''
     distance = 0
     try:
         for source, target in zip(route, route[1:]):
@@ -12,23 +13,22 @@ def get_direct_distance(graph, route):
     return distance
 
 def dijkstra(graph, source, target):
+    '''Returns the minimum path from source to target and cost of travelling it'''
 
     def get_min_path(prev, source, target):
+        if prev[target] is None and source != target:
+            raise InvalidPathError
         current_node = target
         path = [target]
-        if prev[current_node] is None:
-            raise InvalidPathError
-        while prev[current_node] != source:
+        while prev[current_node] != None:
             current_node = prev[current_node]
             path.insert(0, current_node)
-        path.insert(0, source)
         return path
 
     unvisited = set(graph.nodes)
     dist = defaultdict(lambda: float('inf'))
     prev = defaultdict(lambda: None)
     dist[source] = 0
-    prev[source] = source
     while len(unvisited):
         u = min(unvisited, key=lambda x: dist[x])
         unvisited.remove(u)
@@ -52,8 +52,8 @@ class BaseDFS:
         raise NotImplementedError
 
     def find_paths(self, source, cost=0):
-        '''Returns all the paths from source to self.target that meet self.condition
-           Output format is a list of pairs (path,cost)'''
+        '''Returns all the paths from source to self.target that meet self.condition and the
+           cost of travelling through those paths'''
         solutions = []
         if source == self.target and self.condition(cost, self.max_cost):
             solutions.append(([source], cost))
