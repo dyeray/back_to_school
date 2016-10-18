@@ -1,14 +1,14 @@
 {"New York": [
-	{"target": "Liverpool", "distance": 4}],
-"Buenos Aires": [
-	{"target": "New York", "distance": 6},
+    {"target": "Liverpool", "distance": 4}],
+ "Buenos Aires": [
+    {"target": "New York", "distance": 6},
     {"target": "Casablanca", "distance": 5},
-	{"target": "Cape Town", "distance": 4}],
-"Liverpool": [
-	{"target": "Casablanca", "distance": 3},
     {"target": "Cape Town", "distance": 4}],
-"Casablanca": [
-	{"target": "Liverpool", "distance": 3},
+ "Liverpool": [
+    {"target": "Casablanca", "distance": 3},
+    {"target": "Cape Town", "distance": 4}],
+ "Casablanca": [
+    {"target": "Liverpool", "distance": 3},
     {"target": "Cape Town", "distance": 6}],
-"Cape Town": [
-	{"target": "New York", "distance": 8}]}
+ "Cape Town": [
+    {"target": "New York", "distance": 8}]}
