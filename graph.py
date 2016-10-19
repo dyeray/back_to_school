@@ -1,8 +1,9 @@
 import json
 from collections import defaultdict
 
+
 class Graph:
-    '''Directed graph with cost associated to arcs'''
+    """Directed graph with cost associated to arcs"""
 
     def __init__(self, file):
         self.nodes = defaultdict(set)

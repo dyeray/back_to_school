@@ -1,14 +1,14 @@
-﻿import json
-
-from graph import Graph
+﻿from graph import Graph
 from algorithms import get_direct_distance, dijkstra, DepthBoundDFS, DistanceBoundDFS
 from exceptions import InvalidPathError
+
 
 def print_direct_path(graph, path):
     try:
         print('Path {}, distance: {}'.format(path, get_direct_distance(graph, path)))
     except InvalidPathError:
         print('There is no direct path between {}'.format(path))
+
 
 def print_min_distance(graph, source, target):
     try:
@@ -17,6 +17,7 @@ def print_min_distance(graph, source, target):
             source, target, distance, path))
     except InvalidPathError:
         print('There is no direct path between ({},{})'.format(source, target))
+
 
 if __name__ == "__main__":
     with open('data/hitachi.json') as graph_file:
@@ -32,7 +33,7 @@ if __name__ == "__main__":
 
     source = 'New York'
     target='New York'
-    max_cost = 4  # 4 transitions = 3 stops (a direct fly is one transition -> 0 stops)
+    max_cost = 4  # 4 transitions = 3 stops (a direct fly is 1 transition -> 0 stops)
     solutions = DepthBoundDFS(graph, max_cost, target,
                               condition=lambda cost,max_cost: cost <= max_cost).find_paths(source)
     print("Routes from {} to {} with a maximum of {} intermediate stops: {}. Total: {}".format(
@@ -40,7 +41,7 @@ if __name__ == "__main__":
 
     source = 'Buenos Aires'
     target='Liverpool'
-    max_cost = 5
+    max_cost = 5  # 5 transitions = 4 stops (a direct fly is 1 transition -> 0 stops)
     solutions = DepthBoundDFS(graph, max_cost, target,
                               condition=lambda cost,max_cost: cost == max_cost).find_paths(source)
     print("Routes from {} to {} with exactly {} intermediate stops: {}. Total: {}".format(

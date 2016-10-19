@@ -2,8 +2,9 @@
 
 from exceptions import InvalidPathError
 
+
 def get_direct_distance(graph, route):
-    '''Returns the total distance of travelling through a path in the graph'''
+    """Returns the total distance of travelling through a path in the graph"""
     distance = 0
     try:
         for source, target in zip(route, route[1:]):
@@ -12,15 +13,16 @@ def get_direct_distance(graph, route):
         raise InvalidPathError
     return distance
 
+
 def dijkstra(graph, source, target):
-    '''Returns the minimum path from source to target and cost of travelling it'''
+    """Returns the minimum path from source to target and cost of travelling it"""
 
     def get_min_path(prev, source, target):
         if prev[target] is None and source != target:
             raise InvalidPathError
         current_node = target
         path = [target]
-        while prev[current_node] != None:
+        while prev[current_node] is not None:
             current_node = prev[current_node]
             path.insert(0, current_node)
         return path
@@ -52,8 +54,8 @@ class BaseDFS:
         raise NotImplementedError
 
     def find_paths(self, source, cost=0):
-        '''Returns all the paths from source to self.target that meet self.condition and the
-           cost of travelling through those paths'''
+        """Returns all the paths from source to self.target that meet self.condition and the
+           cost of travelling through those paths"""
         solutions = []
         if source == self.target and self.condition(cost, self.max_cost):
             solutions.append(([source], cost))
@@ -67,12 +69,14 @@ class BaseDFS:
                         solutions.append(sol)
         return solutions
 
+
 class DepthBoundDFS(BaseDFS):
-    '''DFS with cost function based on depth of the search'''
+    """DFS with cost function based on depth of the search"""
     def _increment_cost(self, source, target, cost):
         return cost + 1
 
+
 class DistanceBoundDFS(BaseDFS):
-    '''DFS with cost function based on the distance between the nodes of the path'''
+    """DFS with cost function based on the distance between the nodes of the path"""
     def _increment_cost(self, source, target, cost):
         return cost + self.graph.distance[source, target]
