@@ -1,5 +1,0 @@
-{"1": [{"target": "2", "distance": 5}],
- "2": [{"target": "3", "distance": 5}],
- "3": [{"target": "4", "distance": 5}],
- "4": [{"target": "5", "distance": 5}],
- "5": [{"target": "1", "distance": 5}]}
