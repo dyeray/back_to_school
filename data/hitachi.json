@@ -6,7 +6,7 @@
     {"target": "Cape Town", "distance": 4}],
  "Liverpool": [
     {"target": "Casablanca", "distance": 3},
-    {"target": "Cape Town", "distance": 4}],
+    {"target": "Cape Town", "distance": 6}],
  "Casablanca": [
     {"target": "Liverpool", "distance": 3},
     {"target": "Cape Town", "distance": 6}],

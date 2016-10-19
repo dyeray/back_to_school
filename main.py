@@ -50,8 +50,9 @@ if __name__ == "__main__":
     max_cost = 4  # 4 transitions = 3 stops (a direct fly is 1 transition -> 0 stops)
     solutions = DepthBoundDFS(graph, max_cost, target,
                               condition=lambda cost,max_cost: cost <= max_cost).find_paths(source)
-    print("Routes from {} to {} with a maximum of {} intermediate stops:\n{}Total: {}".format(
-        source, target, max_cost - 1, fmt(solutions), len(solutions)))
+    print("Routes from {} to {} with a maximum of {} intermediate stops ({} flights):\n{}"
+          "Total: {}"
+          .format(source, target, max_cost - 1, max_cost, fmt(solutions), len(solutions)))
 
     print('\n***** Question 4 *****')
     source = 'Buenos Aires'
@@ -59,8 +60,8 @@ if __name__ == "__main__":
     max_cost = 5  # 5 transitions = 4 stops (a direct fly is 1 transition -> 0 stops)
     solutions = DepthBoundDFS(graph, max_cost, target,
                               condition=lambda cost,max_cost: cost == max_cost).find_paths(source)
-    print("Routes from {} to {} with exactly {} intermediate stops:\n{}Total: {}".format(
-        source, target, max_cost - 1, fmt(solutions), len(solutions)))
+    print("Routes from {} to {} with exactly {} intermediate stops ({} flights):\n{}Total: {}"
+          .format(source, target, max_cost - 1, max_cost, fmt(solutions), len(solutions)))
 
     print('\n***** Question 5 *****')
     source = 'Liverpool'
